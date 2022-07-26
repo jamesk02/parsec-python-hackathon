@@ -1,4 +1,4 @@
-class AuthType:
+class AuthTypes:
     def __init__(self):
         self.NO_AUTH = 0x00
         self.DIRECT = 0x01
