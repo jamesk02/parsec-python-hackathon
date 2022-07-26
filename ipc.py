@@ -5,7 +5,9 @@ import request as Request
 import response as Response
 
 class Ipc:
-    server_address = "/run/parsec/parsec.sock"
+    server_address = "../quickstart-1.0.0-linux_x86/parsec.sock"
+    # usually "/run/parsec/parsec.sock" but we're not on production deployments of parsec
+    
     sock = None
 
     def __init__(self) -> None:
@@ -25,25 +27,33 @@ class Ipc:
         # are found here https://parallaxsecond.github.io/parsec-book/parsec_client/wire_protocol.html#the-fixed-common-header
 
 
-    def processRequest(self, request):
-        # right now the data doesn't adhere to any of the wire protocol
+    def processRequest(self, req):
 
-        self.sock.sendall(request);
-        print("Just sent request " + request + " to " + self.server_address) # likely will be gibberish once the request type follows wire protocol
+        toSend = req
+
+        if(type(req) is not bytearray):
+            # TODO: toSend = req.build and then serialise
+            pass
+
+        self.sock.send(req)
+        print("Just sent request to " + self.server_address)
 
         received = bytearray();
 
         while(True):
-            newReceived = self.sock.recv(1) # may adjust value
+            newReceived = self.sock.recv(36) # may adjust value
             if(newReceived):
                 received += bytearray(newReceived)
             else:
                 break
 
-        print(received)
+        res = received
 
-        response = Response() # will eventually initialise it with the bytestream
-        return response
+        if(type(req) is not bytearray):
+            # TODO: res = new response object
+            pass
+
+        return res
 
 
     def destructor(self):

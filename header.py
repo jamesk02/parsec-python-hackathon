@@ -3,8 +3,8 @@ import struct
 class Header:
     def default_in(self):
         self.MagicNumber = 0x5EC0A710
-        self.HeaderSize = 0
-        self.MajorVersionNumber = 0
+        self.HeaderSize = 30
+        self.MajorVersionNumber = 1
         self.minorVersionNumber = 0
         self.flags = 0
         self.provider = 0
@@ -29,7 +29,7 @@ class Header:
         self.contentLength = contentLength        
         self.opcode = opCode
 
-        self.headerSize = 36 #usually fixed
+        self.headerSize = 30 #usually fixed
         self.authLength = authLength
         self.status = status
     
