@@ -20,18 +20,13 @@ class Header:
 
         pass
 
-    def __init__(self, provider, sessionHandle, authType, contentLength, opCode, authLength, status):
+    def __init__(self, provider, authType, opCode):
         self.default_in()
 
         self.provider = provider
-        self.sessionHandle = sessionHandle
-        self.authType = authType #only used in requests
-        self.contentLength = contentLength        
+        self.authType = authType #only used in requests      
         self.opcode = opCode
-
         self.headerSize = 36 #usually fixed
-        self.authLength = authLength
-        self.status = status
     
     def serialize(self):
         return struct.pack('<IHBBHBQBBBIHIHH',

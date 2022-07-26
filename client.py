@@ -23,6 +23,7 @@ class Client:
 
     def processOperation(self, opcode, providerId, authType):
         req = Request(opcode, providerId, authType)
+        req.build_operation(opcode)
         req.send()
         res = Response()
         res.receive()
@@ -31,3 +32,9 @@ class Client:
             raise InvalidServiceResponseTypeException(
                     f"Expected Opcode: {req.opcode} but recieved: {res.opcode}")
         return res
+
+
+if __name__ == "__main__":
+    # runs a basc ping operation
+    client = Client()
+    client.ping()
