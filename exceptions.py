@@ -1,1 +1,2 @@
-
+class InvalidServiceResponseTypeException(Exception):
+    pass
