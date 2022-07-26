@@ -1,19 +1,23 @@
 from request import Request
 from response import Response
-from constant import *
+from constants import *
 from exceptions import InvalidServiceResponseTypeException
 
 class Client:
     def __init__(self):
-        self.providerId = ProviderId()
-        self.authType = AuthType()
-        self.opcodes = Opcodes()
+        self.ProviderId = ProviderId()
+        self.AuthType = AuthType()
+        self.Opcodes = Opcodes()
 
     def ping(self):
-        self.processOperation(self.opcodes.PING, self.providerId.CORE, self.authType.NO_AUTH)
+        self.processOperation(self.Opcodes.PING,
+                              self.ProviderId.CORE,
+                              self.AuthType.NO_AUTH)
     
     def listProviders(self):
-        res = self.processOperation(self.opcodes.LIST_PROVIDERS, self.providerId.CORE, self.authType.NO_AUTH)
+        res = self.processOperation(self.Opcodes.LIST_PROVIDERS,
+                                    self.ProviderId.CORE,
+                                    self.AuthType.NO_AUTH)
         return res.body
 
     def processOperation(self, opcode, providerId, auth):
@@ -23,5 +27,6 @@ class Client:
         res.receive()
 
         if res.opcode != opcode:
-            raise InvalidServiceResponseTypeException(f"Expected OpCode: {req.opCode} but recieved: {res.opCode}")
+            raise InvalidServiceResponseTypeException(
+                    f"Expected OpCode: {req.opcode} but recieved: {res.opcode}")
         return res
